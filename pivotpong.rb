@@ -3,13 +3,12 @@ require "sinatra"
 require "sinatra/reloader"
 require "haml"
 
-def ranking
+def calculate_ranking
   ranking = []
   (File.readlines "data/matches.csv").each do |line|
     line.chomp!
-    winner, loser = line.split ","
+    time, winner, loser = line.split ","
     if (ranking.include?(winner) && ranking.include?(loser))
-
       # exising winner is ranked ahead of existing loser
       # ranks don't change
       winner_index = ranking.index(winner)
@@ -39,11 +38,11 @@ def ranking
     end
   end
   ranking
-
 end
 
 get "/" do
-  puts ranking
+  @ranking = calculate_ranking
+  puts @ranking
   haml :index
 end
 
@@ -55,8 +54,10 @@ end
 post "/add-match" do
   winner = params[:winner]
   loser  = params[:loser]
-  File.open("data/matches.csv", "a") do |f|
-    f.write "#{winner},#{loser}\n"
+  if !winner.empty? && !loser.empty?
+    File.open("data/matches.csv", "a") do |f|
+      f.write "#{Time.now},#{winner},#{loser}\n"
+    end
   end
   redirect '/'
 end

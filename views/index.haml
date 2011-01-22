@@ -1,0 +1,14 @@
+%head
+  %title= "Pivot Pong: #{@champion} is the Champ"
+%body
+  %h1 Welcome to Pivot Pong
+  .matchup
+    %h2 Enter a match result
+  
+
+  .rankings
+    %h2 Rankings
+    %ol 
+      - ranking.each do |player|
+        %li= player
+      

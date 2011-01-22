@@ -5,7 +5,7 @@ require "haml"
 
 def ranking
   ranking = []
-  (File.readlines "public/matches.csv").each do |line|
+  (File.readlines "data/matches.csv").each do |line|
     line.chomp!
     winner, loser = line.split ","
     if (ranking.include?(winner) && ranking.include?(loser))
@@ -39,7 +39,7 @@ def ranking
     end
   end
   ranking
-  
+
 end
 
 get "/" do
@@ -48,6 +48,15 @@ get "/" do
 end
 
 get "/history" do
-  @history = File.read "public/matches.csv"
+  @history = File.read "data/matches.csv"
   haml :history
+end
+
+post "/add-match" do
+  winner = params[:winner]
+  loser  = params[:loser]
+  File.open("data/matches.csv", "a") do |f|
+    f.write "#{winner},#{loser}\n"
+  end
+  redirect '/'
 end

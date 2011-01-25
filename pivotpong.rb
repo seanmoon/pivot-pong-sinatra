@@ -5,7 +5,7 @@ require "haml"
 
 def calculate_ranking
   ranking = []
-  (File.readlines "data/matches.csv").each do |line|
+  File.readlines("data/matches.csv").each do |line|
     line.chomp!
     time, winner, loser = line.split ","
     if (ranking.include?(winner) && ranking.include?(loser))
@@ -29,7 +29,7 @@ def calculate_ranking
     # winner takes losers rank
     elsif (!ranking.include?(winner) && ranking.include?(loser))
       index = ranking.index(loser)
-      ranking.insert(index,loser)
+      ranking.insert(index,winner)
     else
       # add two new players
         #add winner, loser
@@ -42,7 +42,6 @@ end
 
 get "/" do
   @ranking = calculate_ranking
-  puts @ranking
   haml :index
 end
 

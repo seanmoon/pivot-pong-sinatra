@@ -3,45 +3,46 @@ require "sinatra"
 require "sinatra/reloader"
 require "haml"
 
-def calculate_ranking
-  ranking = []
-  File.readlines("data/matches.csv").each do |line|
-    line.chomp!
-    time, winner, loser = line.split ","
-    if (ranking.include?(winner) && ranking.include?(loser))
-      # exising winner is ranked ahead of existing loser
+class PivotPong
+  def self.calculate_ranking
+    ranking = []
+    (File.readlines "data/matches.csv").each do |line|
+      line.chomp!
+      time, winner, loser = line.split ","
+      if (ranking.include?(winner) && ranking.include?(loser))
+        # exising winner is ranked ahead of existing loser
+        # ranks don't change
+        winner_index = ranking.index(winner)
+        loser_index = ranking.index(loser)
+        if winner_index < loser_index
+          puts "skip"
+        else
+          #both players exist, move up winner
+          ranking.delete(winner)
+          ranking.insert(loser_index, winner)
+        end
+      # exising winner is ranked ahead of non-existing loser
       # ranks don't change
-      winner_index = ranking.index(winner)
-      loser_index = ranking.index(loser)
-      if winner_index < loser_index
-        puts "skip"
+      # loser is added to list
+      elsif (ranking.include?(winner) && !ranking.include?(loser))
+        ranking << loser
+      # exising loser, non-existing winner
+      # winner takes losers rank
+      elsif (!ranking.include?(winner) && ranking.include?(loser))
+        index = ranking.index(loser)
+        ranking.insert(index,loser)
       else
-        #both players exist, move up winner
-        ranking.delete(winner)
-        ranking.insert(loser_index, winner)
+        # add two new players
+          #add winner, loser
+        ranking << winner
+        ranking << loser
       end
-    # exising winner is ranked ahead of non-existing loser
-    # ranks don't change
-    # loser is added to list
-    elsif (ranking.include?(winner) && !ranking.include?(loser))
-      ranking << loser
-    # exising loser, non-existing winner
-    # winner takes losers rank
-    elsif (!ranking.include?(winner) && ranking.include?(loser))
-      index = ranking.index(loser)
-      ranking.insert(index,winner)
-    else
-      # add two new players
-        #add winner, loser
-      ranking << winner
-      ranking << loser
     end
+    ranking
   end
-  ranking
 end
-
 get "/" do
-  @ranking = calculate_ranking
+  @ranking = PivotPong.calculate_ranking
   haml :index
 end
 

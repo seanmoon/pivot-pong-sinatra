@@ -1,17 +1,18 @@
 %head
-  %title "Pivot Pong"
+  %title Pivot Pong
   %link{"rel" => "stylesheet", "href" => "stylesheets/reset.css", "type" => "text/css"}
+  %link{"rel" => "stylesheet", "href" => "stylesheets/pong.css", "type" => "text/css"}
 %body
-  %h1 Welcome to Pivot Pong
-  .rankings
-    %h2 Rankings
-    %ol
-      - @ranking.each do |player|
-        %li= player
+  .content
+    %h1 Pivot Pong
+    .rankings
+      %h2 Rankings
+      %ol
+        - @ranking.each do |player|
+          %li= player
 
-  .matchup
-    %h2 Enter a match result
-    %p
+    .matchup
+      %h2 Enter a match result
       %form{:action => "add-match", :method => "post"}
         %fieldset
           %p
@@ -22,11 +23,11 @@
             %input{:type => "text", :name => "loser", :class => "text"}
         %input{:type => "submit", :value => "Send", :class => "button"}
 
-  .rules
-    %h2 Rules
-    %p Games are to 11 points. Alternate serve after 2 pts. Winner must win by 2pts (e.g., 11-10 does not win, 12-10 does).
-    %p Matches are best of 3 games.
+    .rules
+      %h2 Rules
+      %p Games are to 11 points. Alternate serve after 2 pts. Winner must win by 2pts (e.g., 11-10 does not win, 12-10 does).
+      %p Matches are best of 3 games.
 
-  .doubles
-    %h2 Doubles rankings are coming soon.
+    .doubles
+      %h2 Doubles rankings are coming soon.
 

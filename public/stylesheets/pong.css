@@ -35,3 +35,6 @@ label {
   list-style-type: decimal;
 }
 
+li {
+  padding-top: 4px;
+}

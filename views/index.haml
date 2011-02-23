@@ -5,6 +5,17 @@
 %body
   .content
     %h1 Pivot Pong
+
+    .algorithm
+      - if @algo == "SF"
+        = "San Francisco style"
+        %a{:href => "/"}
+          = "change"
+      - else
+        = "New York style"
+        %a{:href => "/sf"}
+          = "change"
+
     .rankings
       %h2 Rankings
       %ol
@@ -21,6 +32,7 @@
           %p
             %label{:for => "loser"} Loser:
             %input{:type => "text", :name => "loser", :class => "text"}
+            %input{:type => "hidden", :name => "algo", :value => @algo }
         %input{:type => "submit", :value => "Send", :class => "button"}
 
     .rules

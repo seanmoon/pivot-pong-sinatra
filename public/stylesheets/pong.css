@@ -5,8 +5,14 @@ body {
   margin: 2%;
 }
 
+a {
+  font-size: 11px;
+  text-decoration: none;
+  color: #888;
+
+}
+
 h1 {
-  text-transform: lowercase;
   text-align: center;
   font-size: 24px;
 }
@@ -33,6 +39,11 @@ label {
   padding-left: 40px;
   font-size: 18px;
   list-style-type: decimal;
+}
+
+.algorithm {
+  margin-top: 10px;
+  text-align: center;
 }
 
 li {

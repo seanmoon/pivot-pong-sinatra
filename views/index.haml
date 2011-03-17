@@ -6,16 +6,6 @@
   .content
     %h1 Pivot Pong
 
-    .algorithm
-      - if @algo == "SF"
-        = "San Francisco style"
-        %a{:href => "/"}
-          = "change"
-      - else
-        = "New York style"
-        %a{:href => "/sf"}
-          = "change"
-
     .rankings
       %h2 Rankings
       %ol
@@ -39,7 +29,4 @@
       %h2 Rules
       %p Games are to 11 points. Alternate serve after 2 pts. Winner must win by 2pts (e.g., 11-10 does not win, 12-10 does).
       %p Matches are best of 3 games.
-
-    .doubles
-      %h2 Doubles rankings are coming soon.
 

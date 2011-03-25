@@ -1,0 +1,8 @@
+%h2 Match History
+
+%ol
+  - @matches.each do |m|
+    %li
+      .winner= m.winner
+      .loser=  m.winner
+      %date=   m.date

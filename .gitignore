@@ -2,3 +2,4 @@
 .rspec
 tmp/
 log/
+*.sqlite3

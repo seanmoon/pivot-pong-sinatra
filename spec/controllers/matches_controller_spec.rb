@@ -1,10 +1,41 @@
 require 'spec_helper'
 
 describe MatchesController do
+  subject { response }
+
   describe "GET #index" do
     before { get :index }
-    subject { response }
     it { should be_success }
-    it { assigns(:matches).should be }
+    it { assigns(:matches).should == Match.all }
+    it { assigns(:match).should be }
+  end
+
+  describe "POST #create" do
+    let(:match_params) { {winner: "taeyang"} }
+
+    describe "redirection" do
+      before { post :create, match: match_params }
+      it { should redirect_to(matches_path) }
+    end
+
+    it "creates a match" do
+      expect { post :create, match: match_params }.to change(Match, :count).by(1)
+    end
+  end
+
+  describe "PUT #update" do
+    let(:match) { Match.create(winner: "gd") }
+    let(:valid_params) { { winner: "top" } }
+    before do
+      put :update, id: match.to_param, match: valid_params
+      match.reload
+    end
+
+    it { should redirect_to(matches_path) }
+
+    describe "match" do
+      subject { match }
+      its(:winner) { should == "top" }
+    end
   end
 end

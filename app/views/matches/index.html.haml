@@ -4,5 +4,15 @@
   - @matches.each do |m|
     %li
       .winner= m.winner
-      .loser=  m.winner
-      %date=   m.date
+      .loser=  m.loser
+      %date=   m.date.to_s
+
+= form_for(@match) do |f|
+  = f.label :winner
+  = f.text_field :winner
+  = f.label :loser
+  = f.text_field :loser
+  = f.label :date
+  = f.text_field :date, value: Time.now.strftime("%Y-%m-%d")
+  = submit_tag "Add match"
+

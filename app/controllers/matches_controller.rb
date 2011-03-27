@@ -1,7 +1,7 @@
 class MatchesController < ApplicationController
   def create
-    @match = Match.new(params[:match])
-    @match.save
+    match = Match.new(params[:match])
+    match.save
     redirect_to matches_path
   end
 
@@ -15,8 +15,8 @@ class MatchesController < ApplicationController
   end
 
   def update
-    @match = Match.find_by_id(params[:id])
-    @match.update_attributes(params[:match])
+    match = Match.find_by_id(params[:id])
+    match.update_attributes(params[:match])
     redirect_to matches_path
   end
 end

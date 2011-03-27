@@ -1,4 +1,6 @@
 class MatchesController < ApplicationController
+  include MatchesHelper
+
   def create
     match = Match.new(params[:match])
     match.save
@@ -12,6 +14,11 @@ class MatchesController < ApplicationController
 
   def new
     @match = Match.new
+  end
+
+  def rankings
+    matches = Match.order("date")
+    @rankings = calculate_rankings(matches)
   end
 
   def update

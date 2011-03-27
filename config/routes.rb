@@ -1,4 +1,8 @@
 Pong::Application.routes.draw do
-  resources :matches
-  root to: 'matches#index'
+  resources :matches do
+    collection do
+      get 'rankings'
+    end
+  end
+  root to: 'matches#rankings'
 end

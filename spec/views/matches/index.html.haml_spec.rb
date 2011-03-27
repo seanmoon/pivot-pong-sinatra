@@ -11,4 +11,5 @@ describe "matches/index.html.haml" do
   it { should include("cl") }
   it { should include("minzy") }
   it { should include(date.to_s) }
+  it { should include(link_to "Rankings", rankings_matches_path) }
 end

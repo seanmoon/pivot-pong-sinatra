@@ -38,4 +38,13 @@ describe MatchesController do
       its(:winner) { should == "top" }
     end
   end
+
+  describe "GET #rankings" do
+    let(:date) { Time.now }
+    let!(:newer_match) { Match.create(winner: "me", loser: "you", date: date) }
+    let!(:older_match) { Match.create(winner: "you", loser: "me", date: date - 1.day) }
+    before { get :rankings }
+    it { should be_success }
+    it { assigns(:rankings).should == ["me", "you"] }
+  end
 end
